@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>492</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run JavaScript.action</string>
+				<key>ActionName</key>
+				<string>Run JavaScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>const stopwords = 'a an and at but by for in nor of on or so the to up yet'const defaults = stopwords.split(' ')function titleCase1(str, options) {  const opts = options || {}  if (!str) return ''  const stop = opts.stopwords || defaults  const keep = opts.keepSpaces  const splitter = /(\s+|[-‑–—])/  return str.split(splitter).map((word, index, all) =&gt; {      if (word.match(/\s+/)) return keep ? word : ' '      if (word.match(splitter)) return word      if (        index !== 0 &amp;&amp;        index !== all.length - 1 &amp;&amp;        stop.includes(word.toLowerCase())      ) {        return word.toLowerCase()      }      return capitalize(word)    })    .join('')}function capitalize(str) {  return str.charAt(0).toUpperCase() + str.slice(1)}const alwaysLowercase = [	'a',	'an',	'and',	'at',	'but',	'by',	'for',	'in',	'nor',	'of',	'on',	'or',	'so',	'the',	'to',	'up',	'yet',	'v',	'v.',	'vs',	'vs.'];const containers = ['(', '[', '{', '"', `'`, '_'];function isUrl(url) {	return false;}function capitalize(string) {	if (string.length === 0) {		return string;	}	const letters = [...string];	const firstLetter = letters.shift();	if (containers.indexOf(firstLetter) !== -1) {		return `${firstLetter}${capitalize(letters)}`;	}	return `${firstLetter.toUpperCase()}${letters.join('')}`;}function titleCase(string = '', { excludedWords = [], useDefaultExcludedWords = true } = {}) {	if (string.toUpperCase() === string) {		string = string.toLowerCase();	}	if (useDefaultExcludedWords) {		excludedWords.push(...alwaysLowercase);	}	const words = string.trim().split(/\s+/);	const capitalizedWords = words.map((word, index, array) =&gt; {		const isFirstWird = index === 0;		const isLastWord = index === words.length - 1;		const isEmail = /.+@.+\..+/.test(word);		const isFilePath = /^(\/[\w.]+)+/.test(word);		const isFileName = /^\w+\.\w{1,3}$/.test(word);		const hasInternalCapital = /(?![-‑–—])[a-z]+[A-Z].*/.test(word);		const previousWord = index &gt; 1 ? array[index - 1] : '';		const startOfSubPhrase = index &gt; 1 &amp;&amp; [...previousWord].pop() === ':';		if (isEmail || isUrl(word) || isFilePath || isFileName || hasInternalCapital) {			return word;		}		const hasHyphen = word.match(/[-‑–—]/g);		if (hasHyphen) {			const isMultiPart = hasHyphen.length &gt; 1;			const [hyphenCharacter] = hasHyphen;			return word.split(hyphenCharacter).map((subWord) =&gt; {				if (isMultiPart &amp;&amp; excludedWords.indexOf(subWord.toLowerCase()) !== -1) {					return subWord;				}				return capitalize(subWord);			}).join(hyphenCharacter);		}		if (word.indexOf('/') !== -1) {			return word.split('/').map(capitalize).join('/');		}		if (isFirstWird || isLastWord) {			return capitalize(word);		}		if (!startOfSubPhrase &amp;&amp; excludedWords.indexOf(word.toLowerCase()) !== -1) {			return word.toLowerCase();		}		return capitalize(word);	});	return capitalizedWords.join(' ');}function run(input, parameters) {	if (input.length == 0) return;	input = titleCase(input[0])	return input;}</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunJavaScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunJavaScriptAction</string>
+				<key>InputUUID</key>
+				<string>C1E03926-E9ED-450C-BDDF-5DB3490E5872</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+					<string>JavaScript</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>418C41A6-B1C7-4557-9E2F-A3485899E130</string>
+				<key>ShowWhenRun</key>
+				<false/>
+				<key>UUID</key>
+				<string>35C37C7E-1F46-4299-AA53-4AFD0A441F39</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>function run(input, parameters) {
+	
+	// Your script goes here
+
+	return input;
+}</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>719.500000:816.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleIDsByPath</key>
+		<dict/>
+		<key>applicationPaths</key>
+		<array/>
+		<key>backgroundColorName</key>
+		<string>blackColor</string>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>presentationMode</key>
+		<integer>11</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSTouchBarCheck</string>
+		<key>useAutomaticInputType</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
